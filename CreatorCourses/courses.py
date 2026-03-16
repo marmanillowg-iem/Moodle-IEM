@@ -15,13 +15,14 @@ def filter_courses_by_age(courses, year_suffix):
             filtered_courses.append(course)
     return filtered_courses
 
-def create_course(fullname, shortname, description, categoryid):
+def create_course(fullname, shortname, description, categoryid, displayname):
     try:
         response = moodle_call('core_course_create_courses', {
             'courses[0][fullname]': fullname,
             'courses[0][shortname]': shortname,
             'courses[0][summary]': description,
-            'courses[0][categoryid]': categoryid
+            'courses[0][categoryid]': categoryid,
+            'courses[0][displayname]': displayname
         })
         return response
     except Exception as e:
@@ -29,8 +30,14 @@ def create_course(fullname, shortname, description, categoryid):
         return None
 
 def view_course_details(courses):
+    i = 0
     for course in sorted(courses, key=lambda x: x.get('shortname','')):
-        print(f"ShortName: {course.get('shortname')} - Fullname: ({course.get('fullname')}) - Categoría ID: {course.get('categoryid')}")
+        print(f"Indice: {i} - ShortName: {course.get('shortname')} - Fullname: ({course.get('fullname')}) - Categoría ID: {course.get('categoryid')} - summary: {course.get('summary')}")
+        i += 1
+
+def preview_course_to_create(course, year_suffix):
+    for course in course:
+        print(f"Curso a crear: ShortName: {course.get('shortname')[:-2] + year_suffix} - Fullname: ({course.get('fullname')[:-2] + year_suffix}) - Categoría ID: {course.get('categoryid')} - summary: {course.get('summary')[:-2]+year_suffix} - displayname: {course.get('displayname')}")
         
 # def comparated(a, b):
 #     ca=0

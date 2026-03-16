@@ -1,0 +1,4 @@
+Conexión a Moodle exitosa. Iniciando proceso de creación de cursos...
+ShortName: Matematicas21-26 - Fullname: (Matemáticas 2° 1° - Año 2026) - Categoría ID: 82
+faltaria los otros de 2do y 3ra
+

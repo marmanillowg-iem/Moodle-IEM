@@ -1,0 +1,90 @@
+Conexión a Moodle exitosa. Iniciando proceso de creación de cursos...
+Indice: 0 - ShortName:  Formulacion6-25 - Fullname: (Formulación y Evaluación de Proyectos 6° - Año 2025) - Categoría ID: 84
+Indice: 1 - ShortName: Acceso5-25 - Fullname: (Acceso a la Información 5° - Año 2025) - Categoría ID: 84
+Indice: 2 - ShortName: Acceso6-25 - Fullname: (Acceso a la Información 6° - Año 2025) - Categoría ID: 84
+Indice: 23 - ShortName: CsPoliticas6-25 - Fullname: (Ciencias Políticas 6° Año - Año 2025) - Categoría ID: 73
+Indice: 24 - ShortName: EF1-25 - Fullname: (Educación Física 1° - Año 2025) - Categoría ID: 74
+Indice: 25 - ShortName: EF2-25 - Fullname: (Educación Física 2° - Año 2025) - Categoría ID: 74
+Indice: 26 - ShortName: EF3-25 - Fullname: (Educación Física 3° - Año 2025) - Categoría ID: 74
+Indice: 27 - ShortName: EF4-25 - Fullname: (Educación Física 4° - Año 2025) - Categoría ID: 74
+Indice: 28 - ShortName: EF5-25 - Fullname: (Educación Física 5° - Año 2025) - Categoría ID: 74
+Indice: 29 - ShortName: EF6-25 - Fullname: (Educación Física 6° - Año 2025) - Categoría ID: 74
+Indice: 30 - ShortName: Etica6-25 - Fullname: (Etica 6° - Año 2025) - Categoría ID: 73
+Indice: 39 - ShortName: Formulacion5-25 - Fullname: (Formulación y Evaluación de Proyectos 5° - Año 2025) - Categoría ID: 84
+Indice: 52 - ShortName: Geografía51-25 - Fullname: (Geografía 5° 1° - Año 2025) - Categoría ID: 77
+Indice: 53 - ShortName: Geografía52-25 - Fullname: (Geografía 5° 2° - Año 2025) - Categoría ID: 77
+Indice: 54 - ShortName: Geografía53-25 - Fullname: (Geografía 5° 3° - Año 2025) - Categoría ID: 77
+Indice: 68 - ShortName: Idioma11-25 - Fullname: (Idioma Nacional y Literatura 1° 1° - Año 2025) - Categoría ID: 78
+Indice: 69 - ShortName: Idioma12-25 - Fullname: (Idioma Nacional y Literatura 1° 2° - Año 2025) - Categoría ID: 78
+Indice: 70 - ShortName: Idioma13-25 - Fullname: (Idioma Nacional y Literatura 1° 3° - Año 2025) - Categoría ID: 78
+Indice: 71 - ShortName: Idioma21-25 - Fullname: (Idioma Nacional y Literatura 2° 1° - Año 2025) - Categoría ID: 78
+Indice: 72 - ShortName: Idioma22-25 - Fullname: (Idioma Nacional y Literatura 2° 2° - Año 2025) - Categoría ID: 78
+Indice: 73 - ShortName: Idioma23-25 - Fullname: (Idioma Nacional y Literatura 2° 3° - Año 2025) - Categoría ID: 78
+Indice: 74 - ShortName: Idioma31-25 - Fullname: (Idioma Nacional y Literatura 3° 1° - Año 2025) - Categoría ID: 78
+Indice: 75 - ShortName: Idioma32-25 - Fullname: (Idioma Nacional y Literatura 3° 2° - Año 2025) - Categoría ID: 78
+Indice: 76 - ShortName: Idioma33-25 - Fullname: (Idioma Nacional y Literatura 3° 3° - Año 2025) - Categoría ID: 78
+Indice: 77 - ShortName: Idioma41-25 - Fullname: (Idioma Nacional y Literatura 4° 1° - Año 2025) - Categoría ID: 78
+Indice: 78 - ShortName: Idioma42-25 - Fullname: (Idioma Nacional y Literatura 4° 2° - Año 2025) - Categoría ID: 78
+Indice: 79 - ShortName: Idioma43-25 - Fullname: (Idioma Nacional y Literatura 4° 3° - Año 2025) - Categoría ID: 78
+Indice: 80 - ShortName: Idioma51-25 - Fullname: (Idioma Nacional y Literatura 5° 1° - Año 2025) - Categoría ID: 78
+Indice: 81 - ShortName: Idioma52-25 - Fullname: (Idioma Nacional y Literatura 5° 2° - Año 2025) - Categoría ID: 78
+Indice: 82 - ShortName: Idioma53-25 - Fullname: (Idioma Nacional y Literatura 5° 3° - Año 2025) - Categoría ID: 78
+Indice: 83 - ShortName: Idioma61-25 - Fullname: (Idioma Nacional y Literatura 6° 1° - Año 2025) - Categoría ID: 78
+Indice: 84 - ShortName: Idioma62-25 - Fullname: (Idioma Nacional y Literatura 6° 2° - Año 2025) - Categoría ID: 78
+Indice: 85 - ShortName: Idioma63-25 - Fullname: (Idioma Nacional y Literatura 6° 3° - Año 2025) - Categoría ID: 78
+Indice: 86 - ShortName: Info11-25 - Fullname: (Informática 1° 1° - Año 2025) - Categoría ID: 79
+Indice: 87 - ShortName: Info12-25 - Fullname: (Informática 1° 2° - Año 2025) - Categoría ID: 79
+Indice: 88 - ShortName: Info13-25 - Fullname: (Informática 1° 3° - Año 2025) - Categoría ID: 79
+Indice: 89 - ShortName: Info21-25 - Fullname: (Informática 2° 1° - Año 2025) - Categoría ID: 79
+Indice: 90 - ShortName: Info22-25 - Fullname: (Informática 2° 2° - Año 2025) - Categoría ID: 79
+Indice: 91 - ShortName: Info23-25 - Fullname: (Informática 2° 3° - Año 2025) - Categoría ID: 79
+Indice: 95 - ShortName: Info41-25 - Fullname: (Informática 4° 1° - Año 2025) - Categoría ID: 79
+Indice: 96 - ShortName: Info42-25 - Fullname: (Informática 4° 2° - Año 2025) - Categoría ID: 79
+Indice: 97 - ShortName: Info43-25 - Fullname: (Informática 4° 3° - Año 2025) - Categoría ID: 79
+Indice: 98 - ShortName: Info5-25 - Fullname: (Informática 5° - Año 2025) - Categoría ID: 79
+Indice: 99 - ShortName: Info6-25 - Fullname: (Informática 6° - Año 2025) - Categoría ID: 79
+Indice: 100 - ShortName: Ingles21-25 - Fullname: (Inglés 2° 1° - Año 2025) - Categoría ID: 81
+Indice: 102 - ShortName: Inglés12-25 - Fullname: (Inglés 1° 2° - Año 2025) - Categoría ID: 81
+Indice: 103 - ShortName: Inglés13-25 - Fullname: (Inglés 1° 3° - Año 2025) - Categoría ID: 81
+Indice: 104 - ShortName: Inglés22-25 - Fullname: (Inglés 2° 2° - Año 2025) - Categoría ID: 81
+Indice: 105 - ShortName: Inglés23-25 - Fullname: (Inglés 2° 3° - Año 2025) - Categoría ID: 81
+Indice: 106 - ShortName: Inglés31-25 - Fullname: (Inglés 3° 1° - Año 2025) - Categoría ID: 81
+Indice: 107 - ShortName: Inglés32-25 - Fullname: (Inglés 3° 2° - Año 2025) - Categoría ID: 81
+Indice: 108 - ShortName: Inglés33-25 - Fullname: (Inglés 3° 3° - Año 2025) - Categoría ID: 81
+Indice: 109 - ShortName: Inglés41-25 - Fullname: (Inglés 4° 1° - Año 2025) - Categoría ID: 81
+Indice: 110 - ShortName: Inglés42-25 - Fullname: (Inglés 4° 2° - Año 2025) - Categoría ID: 81
+Indice: 111 - ShortName: Inglés43-25 - Fullname: (Inglés 4° 3° - Año 2025) - Categoría ID: 81
+Indice: 112 - ShortName: Inglés51-25 - Fullname: (Inglés 5° 1° - Año 2025) - Categoría ID: 81
+Indice: 113 - ShortName: Inglés52-25 - Fullname: (Inglés 5° 2° - Año 2025) - Categoría ID: 81
+Indice: 114 - ShortName: Inglés53-25 - Fullname: (Inglés 5° 3° - Año 2025) - Categoría ID: 81
+Indice: 115 - ShortName: Inglés61-25 - Fullname: (Inglés 6° 1° - Año 2025) - Categoría ID: 81
+Indice: 116 - ShortName: Inglés62-25 - Fullname: (Inglés 6° 2° - Año 2025) - Categoría ID: 81
+Indice: 117 - ShortName: Inglés63-25 - Fullname: (Inglés 6° 3° - Año 2025) - Categoría ID: 81
+Indice: 118 - ShortName: Int-Econ25 - Fullname: (Introducción a la Economía 6° - Año 2025) - Categoría ID: 73
+Indice: 119 - ShortName: Lógica5-25 - Fullname: (Lógica y Metodología de la Ciencia 5° - Año 2025) - Categoría ID: 73
+Indice: 129 - ShortName: Música11-25 - Fullname: (Formación Musical 1° 1° - Año 2025) - Categoría ID: 76
+Indice: 130 - ShortName: Música12-25 - Fullname: (Formación Musical 1° 2° - Año 2025) - Categoría ID: 76
+Indice: 131 - ShortName: Música13-25 - Fullname: (Formación Musical 1° 3° - Año 2025) - Categoría ID: 76
+Indice: 132 - ShortName: Música21-25 - Fullname: (Formación Musical 2° 1° - Año 2025) - Categoría ID: 76
+Indice: 133 - ShortName: Música22-25 - Fullname: (Formación Musical 2° 2° - Año 2025) - Categoría ID: 76
+Indice: 134 - ShortName: Música23-25 - Fullname: (Formación Musical 2° 3° - Año 2025) - Categoría ID: 76
+Indice: 135 - ShortName: Música31-25 - Fullname: (Formación Musical 3° 1° - Año 2025) - Categoría ID: 76
+Indice: 136 - ShortName: Música32-25 - Fullname: (Formación Musical 3° 2° - Año 2025) - Categoría ID: 76
+Indice: 137 - ShortName: Música33-25 - Fullname: (Formación Musical 3° 3° - Año 2025) - Categoría ID: 76
+Indice: 138 - ShortName: Música41-25 - Fullname: (Formación Musical 4° 1° - Año 2025) - Categoría ID: 76
+Indice: 139 - ShortName: Música42-25 - Fullname: (Formación Musical 4° 2° - Año 2025) - Categoría ID: 76
+Indice: 140 - ShortName: Música43-25 - Fullname: (Formación Musical 4° 3° - Año 2025) - Categoría ID: 76
+Indice: 153 - ShortName: Psico6-25 - Fullname: (Introducción a la Psicología 6° - Año 2025) - Categoría ID: 73
+Indice: 163 - ShortName: Sociologia-25 - Fullname: (Sociología 6° - Año 2025) - Categoría ID: 73
+Indice: 164 - ShortName: Tutoria11-25 - Fullname: (Tutoria 1° 1° - Año 2025) - Categoría ID: 87
+Indice: 165 - ShortName: Tutoria12-25 - Fullname: (Tutoria 1° 2° - Año 2025) - Categoría ID: 87
+Indice: 166 - ShortName: Tutoria13-25 - Fullname: (Tutoria 1° 3° - Año 2025) - Categoría ID: 87
+Indice: 167 - ShortName: Tutoria21-25 - Fullname: (Tutoria 2° 1° - Año 2025) - Categoría ID: 87
+Indice: 168 - ShortName: Tutoria22-25 - Fullname: (Tutoria 2° 2° - Año 2025) - Categoría ID: 87
+Indice: 169 - ShortName: Tutoria23-25 - Fullname: (Tutoria 2° 3° - Año 2025) - Categoría ID: 87
+Indice: 170 - ShortName: Tutoria31-25 - Fullname: (Tutoria 3° 1° - Año 2025) - Categoría ID: 87
+Indice: 171 - ShortName: Tutoria32-25 - Fullname: (Tutoria 3° 2° - Año 2025) - Categoría ID: 87
+Indice: 172 - ShortName: Tutoria33-25 - Fullname: (Tutoria 3° 3° - Año 2025) - Categoría ID: 87
+Indice: 173 - ShortName: Tutoria41-25 - Fullname: (Tutoria 4° 1° - Año 2025) - Categoría ID: 87
+Indice: 174 - ShortName: Tutoria42-25 - Fullname: (Tutoria 4° 2° - Año 2025) - Categoría ID: 87
+Indice: 175 - ShortName: Tutoria43-25 - Fullname: (Tutoria 4° 3° - Año 2025) - Categoría ID: 87
