@@ -18,10 +18,10 @@ def main():
         print(f"Se encontraron {len(new_created_courses)} cursos del año {NEW_SCHOOL_YEAR}.")
         
         view_course_details(new_created_courses)
-        #view_course_details(old_courses)
+        view_course_details(old_courses)
         
-        # old_courses.pop(4)
-        # view_course_details(old_courses)
+        old_courses.pop(4)
+        view_course_details(old_courses)
         
     else:
         print("No se pudo conectar a Moodle. Verifique la configuración y vuelva a intentarlo.")
