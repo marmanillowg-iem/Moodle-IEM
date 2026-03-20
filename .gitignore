@@ -5,3 +5,5 @@ lib64
 .env
 *.cfg
 __pycache__/
+logs/
+*.log

@@ -1,21 +1,38 @@
 from api import moodle_call
+import logging
 
-def get_courses():
+logger = logging.getLogger(__name__)
+
+# Devuelve todos los cursos disponibles en Moodle
+def get_courses() -> list:
     try:
         return moodle_call('core_course_get_courses')
     except Exception as e:
-        print(f"Error al obtener cursos: {e}")
+        logger.error(f"Error al obtener cursos: {e}")
         return []
 
-def filter_courses_by_age(courses, year_suffix):
-    filtered_courses = []
-    for course in courses:
-        shortname = course.get('shortname','').strip()
-        if shortname.endswith(year_suffix):
-            filtered_courses.append(course)
-    return filtered_courses
+'''
+    Filtra los cursos por el sufijo del año en el shortname.
+    @Param courses: Lista de cursos a filtrar
+    @Param year_suffix: Sufijo del año a buscar (OLD_SCHOOL_YEAR o NEW_SCHOOL_YEAR)
+    @Return: Lista de cursos que coinciden con el sufijo del año
+'''
+def filter_courses_by_age(courses: list, year_suffix: str) -> list:
+    """Filtra cursos cuyo shortname termina con el sufijo de año especificado."""
+    return [
+        course for course in courses
+        if course.get('shortname', '').strip().endswith(year_suffix)
+    ]
 
-def create_course(fullname, shortname, description, categoryid):
+'''
+    Creador de curso en la Plataforma Moodle
+    @Param fullname: Nombre completo del curso
+    @Param shortname: Nombre corto del curso
+    @Param description: Descripción del curso
+    @Param categoryid: ID de la categoría a la que pertenece el curso
+    @Return: Respuesta de Moodle con los detalles del curso creado o None si hay error
+'''
+def create_course(fullname: str, shortname: str, description: str, categoryid: int) -> dict | None:
     try:
         response = moodle_call('core_course_create_courses', {
             'courses[0][fullname]': fullname,
@@ -25,34 +42,63 @@ def create_course(fullname, shortname, description, categoryid):
         })
         return response
     except Exception as e:
-        print(f"Error al crear curso: {e}")
+        logger.error(f"Error al crear curso: {e}")
         return None
 
-def view_course_details(courses):
-    i = 0
-    for course in sorted(courses, key=lambda x: x.get('shortname','')):
-        print(f"Indice: {i} - ShortName: {course.get('shortname')} - Fullname: ({course.get('fullname')}) - Categoría ID: {course.get('categoryid')} - summary: {course.get('summary')}")
-        i += 1
+# Muestra los detalles de los cursos ordenados por shortname
+def view_course_details(courses: list) -> None:
+    sorted_courses = sorted(courses, key=lambda x: x.get('shortname', ''))
+    for i, course in enumerate(sorted_courses):
+        logger.info(
+            f"Indice: {i} - ID: {course.get('id')} - "
+            f"ShortName: {course.get('shortname')} - "
+            f"Fullname: ({course.get('fullname')}) - "
+            f"Categoría ID: {course.get('categoryid')} - "
+            f"summary: {course.get('summary')}"
+        )
 
-def create_list_courses(courses):
-    results = []
-    for course in courses:
-        results.append(create_course( course.get('fullname'), course.get('shortname'), course.get('summary'), course.get('categoryid')))
-    return results
 
-def course_to_create(course, year_suffix):
-    courses_to_create = []
-    for course in course:
-        courses_to_create.append({
-            'shortname': course.get('shortname')[:-2] + year_suffix,
-            'fullname': course.get('fullname')[:-2] + year_suffix,
-            'categoryid': course.get('categoryid'),
-            'summary': 'Aula Virtual de ' + course.get('fullname')[:-2] + year_suffix,
-            'displayname': course.get('fullname')[:-2] + year_suffix,
-        })
-    return courses_to_create
+'''
+    Creador de múltiples cursos en lote
+    @Param courses: Lista de diccionarios con los detalles de cada curso a crear
+    @Return: Lista de respuestas de Moodle para cada curso creado o None si hay error (Log del evento)
+'''
+def create_list_courses(courses: list) -> list:
+    return [
+        create_course(
+            course.get('fullname'),
+            course.get('shortname'),
+            course.get('summary'),
+            course.get('categoryid')
+        )
+        for course in courses
+    ]
 
-def modify_course_category(courseid, new_categoryid):
+'''
+    Prepara cursos para creación reemplazando los últimos 2 caracteres (que contiene el año lectivo anterior) con el sufijo del nuevo año lectivo.
+    @Param courses: Lista de cursos a preparar
+    @Param year_suffix: Nuevo sufijo de año a aplicar (NEW_SCHOOL_YEAR)
+    @Return: Lista de cursos con shortname y fullname modificados para  la creación
+'''
+def courses_to_create(courses: list, year_suffix: str) -> list:
+    return [
+        {
+            'shortname': item.get('shortname', '')[:-2] + year_suffix,
+            'fullname': item.get('fullname', '')[:-2] + year_suffix,
+            'categoryid': item.get('categoryid'),
+            'summary': f"Aula Virtual de {item.get('fullname', '')[:-2]}{year_suffix}",
+            'displayname': item.get('fullname', '')[:-2] + year_suffix,
+        }
+        for item in courses
+    ]
+
+'''
+    Modifica la categoría de un curso específico.
+    @Param courseid: ID del curso a modificar
+    @Param new_categoryid: ID de la nueva categoría a asignar al curso
+    @Return: Respuesta de Moodle con los detalles del curso modificado o None si hay error (Log del evento)
+'''
+def modify_course_category(courseid: int, new_categoryid: int) -> dict | None:
     try:
         response = moodle_call('core_course_update_courses', {
             'courses[0][id]': courseid,
@@ -60,13 +106,18 @@ def modify_course_category(courseid, new_categoryid):
         })
         return response
     except Exception as e:
-        print(f"Error al modificar curso: {e}")
+        logger.error(f"Error al modificar curso: {e}")
         return None
 
-def modify_courses_categories(courses, new_categories):
-    results = []
-    for course in courses:
-        course_category_id = course.get('categoryid')
-        if course_category_id in new_categories:
-            results.append(modify_course_category(course.get('id'), new_categories[course_category_id]))
-    return results
+'''
+    Modifica la categoría de un listado de cursos según un mapeo de categoryid actual -> new_categoryid.
+    @Param courses: Lista de cursos a modificar
+    @Param new_categories: Diccionario mapeando categoryid actual -> new_categoryid para las categorías a asignar
+    @Return: Lista de respuestas de Moodle para cada curso modificado o None si hay error (Log del evento)
+'''
+def modify_courses_categories(courses: list, new_categories: dict) -> list:
+    return [
+        modify_course_category(course.get('id'), new_categories[course_category_id])
+        for course in courses
+        if (course_category_id := course.get('categoryid')) in new_categories
+    ]
