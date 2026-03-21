@@ -1,5 +1,5 @@
 from api import moodle_call
-from config import STUDENT_ROLE_ID, TEACHER_ROLE_ID
+from config import STUDENT_ROLE_ID, TEACHER_ROLE_ID, COURSE_ID_WITH_STUDENTS_CORRECTLY, COURSE_DIVITION
 import logging
 
 logger = logging.getLogger(__name__)
@@ -81,3 +81,21 @@ def enrol_user(courseid: int, userid: int, roleid: int) -> dict | None:
     except Exception as e:
         logger.error(f"Error al inscribir usuario: {e}")
         return None   
+
+'''
+    Crea un diccionario con la division como clave y una lista de IDs de estudiantes (que toman funcion de plantillas) para luego ser inscriptos en los cursos correspondientes a esa division.
+    @Return: Diccionario con la division como clave y una lista de IDs de estudiantes como valor o vacio en caso de error (Log de eventos)
+'''
+def create_list_students_enrolments() -> dict:
+    if len(COURSE_DIVITION) != len(COURSE_ID_WITH_STUDENTS_CORRECTLY):
+        logger.error(
+            "Longitudes desiguales: COURSE_DIVITION=%s, COURSE_ID_WITH_STUDENTS_CORRECTLY=%s",
+            len(COURSE_DIVITION),
+            len(COURSE_ID_WITH_STUDENTS_CORRECTLY),
+        )
+        return {}
+
+    return {
+        division: get_students_id(course_id)
+        for division, course_id in zip(COURSE_DIVITION, COURSE_ID_WITH_STUDENTS_CORRECTLY)
+    }

@@ -7,222 +7,99 @@ import logging
 
 logger = logging.getLogger(__name__)
 
-# posiciones = [0, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 31, 32, 33, 34, 35, 36, 37, 38, 40, 41, 42, 43, 44, 45, 46, 47, 48, 49, 50, 51, 55, 56, 57, 58, 59, 60, 61, 62, 63, 64, 65, 66, 67, 92, 93, 94, 101, 120, 121, 122, 123, 124, 125, 126, 127, 128, 141, 142, 143, 144, 145, 146, 147, 148, 149, 150, 151, 152, 154, 155, 156, 157, 158, 159, 160, 161, 162]
+#TODO!: La funcion no contemplan los estudiantes de un unico curso de 2do y 3ro pues tenemos que diferenciar de otra forma a dichos cursos pues endwith no es suficiente, ya que traerá a las segundas y terceras divisiones de todos los años.
+'''
+    Inscribe a los estudiantes en los cursos nuevos según su sección y división de referencia
+    @Param courses_to_enrol: Lista de cursos nuevos a los cuales se les deben inscribir estudiantes
+    @Return: None
+'''
+def enroll_students_in_new_courses(courses_to_enrol: list) -> None:
+    try:
+        STUDENTS_TO_ENROL = create_list_students_enrolments()
+        section_to_divisions = {
+            '21': [21],
+            '22': [22],
+            '23': [23],
+            '31': [31],
+            '32': [32],
+            '33': [33],
+            '4': [41, 42, 43],
+            '41': [41],
+            '42': [42],
+            '43': [43],
+            '5': [51, 52, 53],
+            '51': [51],
+            '52': [52],
+            '53': [53],
+            '6': [61, 62, 63],
+            '61': [61],
+            '62': [62],
+            '63': [63],
+        }
 
-# coursos_referencia_estudiantes = {
-#     21: get_students_id(1352),
-#     22: get_students_id(1353),
-#     23: get_students_id(1354),
-#     31: get_students_id(1355),
-#     32: get_students_id(1356),
-#     33: get_students_id(1357),
-#     41: get_students_id(1278),
-#     42: get_students_id(1279),
-#     43: get_students_id(1280),
-#     51: get_students_id(1358),
-#     52: get_students_id(1359),
-#     53: get_students_id(1360),
-#     61: get_students_id(1361),
-#     62: get_students_id(1362),
-#     63: get_students_id(1363),
-# }
+        for course in courses_to_enrol:
+            if len(get_enrolled_students(course.get('id'))) == 0:
+                logger.info(f"Curso {course.get('shortname')} sin estudiantes inscritos. Inscribiendo estudiantes de referencia...")
+                shortname = (course.get('shortname') or '').strip()
+                course_id = course.get('id')
+                for section_suffix, divisions in section_to_divisions.items():
+                    if shortname.endswith(f"{section_suffix}-{NEW_SCHOOL_YEAR}"):
+                        for division in divisions:
+                            for student_id in STUDENTS_TO_ENROL.get(division, []):
+                                enrol_user(course_id, student_id, STUDENT_ROLE_ID)
+                        break
+                        
+    except Exception as e:
+        logger.error(f"Error al inscribir estudiantes en los cursos nuevos: {e}")
 
-# docentes_faltantes = {
-# 1108: 1355,
-# 1109: 1356,
-# 1110: 1357,
-# 1111: 1358,
-# 1112: 1359,
-# 1113: 1360,
-# 1115: 1361,
-# 1116: 1363,
-# 1135: 1295,
-# 1162: 1302,
-# 1161: 1303,
-# 1160: 1304,
-# 1159: 1305,
-# 1158: 1306,
-# 1157: 1307,
-# 1156: 1308,
-# 1155: 1309,
-# 1154: 1310,
-# 1153: 1311,
-# 1152: 1312,
-# 1151: 1313,
-# 1208: 1335,
-# 1243: 1332,
-# 1238: 1317,
-# 1240: 1323,
-# 1267: 1326,
-# 1268: 1336,
-# 1269: 1328,
-# 1242: 1329,
-# 1144: 1430,
-# 1142: 1432,
-# 1139: 1435,
-# 1138: 1436,
-# 1137: 1437,
-# 1136: 1438,
-# 1245: 1297,
-# 1246: 1298,
-# 1247: 1299,
-# 1248: 1300,
-# 1249: 1301
-# }
+'''
+    Inscribe a los docentes en los cursos nuevos según su sección y división de referencia
+    @Param courses_to_enrol: Lista de cursos nuevos a los cuales se les deben inscribir docentes
+    @Param old_courses_school_year: Lista de cursos antiguos del año escolar anterior
+    @Return: None
+'''
+def enroll_teachers_in_new_courses(courses_to_enrol: list, old_courses_school_year: list) -> None:
+    try:
+        for course in courses_to_enrol:
+            if len(get_enrolled_teachers(course.get('id'))) == 0:
+                logger.warning(f"Curso {course.get('shortname')} - ID: {course.get('id')} sin docentes inscritos. Inscribiendo docentes de referencia...")
+                for old_course in old_courses_school_year:
+                    if old_course.get('shortname')[:-2] == course.get('shortname')[:-2]:
+                        teachers = get_enrolled_teachers(old_course.get('id'))
+                        for teacher in teachers:
+                             enrol_user(course.get('id'), teacher.get('id'), TEACHER_ROLE_ID)
+                        break
+    except Exception as e:
+        logger.error(f"Error al inscribir docentes en los cursos nuevos: {e}")
 
+# Migracion de cursos: Crea los cursos nuevos, modifica sus categorias y luego inscribe a los estudiantes y docentes de referencia en los cursos nuevos.
 def main():
     if moodle_test_connection():
-        logger.info("Conexión a Moodle exitosa. Iniciando proceso de creación de cursos...")
-        get_courses_list = get_courses()
-        
-        old_courses = filter_courses_by_age(get_courses_list, OLD_SCHOOL_YEAR)
-        old_courses = sorted(old_courses, key=lambda x: x.get('shortname',''))        
-        new_created_courses = filter_courses_by_age(get_courses_list, NEW_SCHOOL_YEAR)
-        new_created_courses = sorted(new_created_courses, key=lambda x: x.get('shortname',''))
-        
-        #for i in sorted(set(posiciones), reverse=True):
-        #    if 0 <= i < len(old_courses):
-        #        old_courses.pop(i)
-        
-        #courses_create_list = course_to_create(old_courses, NEW_SCHOOL_YEAR)
-        #print(create_list_courses(courses_create_list))
-        #Ya se crearon los cursos
-        #print(modify_courses_categories(old_courses,category_with_parent_id()))
-        #view_course_details(new_created_courses)
-    
-        # for course in new_created_courses:
-        #     if get_enrolled_students(course.get('id')) == []:
-        #         if course.get('shortname').strip('').endswith('21-26'):
-        #             for student_id in coursos_referencia_estudiantes[21]:
-        #                 enrol_user(course.get('id'), student_id, 5)
-                        
-        #         elif course.get('shortname').strip('').endswith('22-26'):
-        #             for student_id in coursos_referencia_estudiantes[22]:
-        #                 enrol_user(course.get('id'), student_id, 5)
-                        
-        #         elif course.get('shortname').strip('').endswith('23-26'):
-        #             for student_id in coursos_referencia_estudiantes[23]:
-        #                 enrol_user(course.get('id'), student_id, 5)
-                        
-        #         elif course.get('shortname').strip('').endswith('31-26'):
-        #             for student_id in coursos_referencia_estudiantes[31]:
-        #                 enrol_user(course.get('id'), student_id, 5)
-                        
-        #         elif course.get('shortname').strip('').endswith('32-26'):
-        #             for student_id in coursos_referencia_estudiantes[32]:
-        #                 enrol_user(course.get('id'), student_id, 5)
-                        
-        #         elif course.get('shortname').strip('').endswith('33-26'):
-        #             for student_id in coursos_referencia_estudiantes[33]:
-        #                 enrol_user(course.get('id'), student_id, 5)
-                        
-        #         elif course.get('shortname').strip('').endswith('4-26'):
-        #             for student_id in coursos_referencia_estudiantes[41]:
-        #                 enrol_user(course.get('id'), student_id, 5)
-        #             for student_id in coursos_referencia_estudiantes[42]:
-        #                 enrol_user(course.get('id'), student_id, 5)
-        #             for student_id in coursos_referencia_estudiantes[43]:
-        #                 enrol_user(course.get('id'), student_id, 5)
-                    
-        #         elif course.get('shortname').strip('').endswith('41-26'):
-        #             for student_id in coursos_referencia_estudiantes[41]:
-        #                 enrol_user(course.get('id'), student_id, 5)
-                        
-        #         elif course.get('shortname').strip('').endswith('42-26'):
-        #             for student_id in coursos_referencia_estudiantes[42]:
-        #                 enrol_user(course.get('id'), student_id, 5)
-                        
-        #         elif course.get('shortname').strip('').endswith('43-26'):
-        #             for student_id in coursos_referencia_estudiantes[43]:
-        #                 enrol_user(course.get('id'), student_id, 5)
-                        
-        #         elif course.get('shortname').strip('').endswith('5-26'):
-        #             for student_id in coursos_referencia_estudiantes[51]:
-        #                 enrol_user(course.get('id'), student_id, 5)
-        #             for student_id in coursos_referencia_estudiantes[52]:
-        #                 enrol_user(course.get('id'), student_id, 5)
-        #             for student_id in coursos_referencia_estudiantes[53]:
-        #                 enrol_user(course.get('id'), student_id, 5)
-                        
-                        
-        #         elif course.get('shortname').strip('').endswith('51-26'):
-        #             for student_id in coursos_referencia_estudiantes[51]:
-        #                 enrol_user(course.get('id'), student_id, 5)
-                        
-        #         elif course.get('shortname').strip('').endswith('52-26'):
-        #             for student_id in coursos_referencia_estudiantes[52]:
-        #                 enrol_user(course.get('id'), student_id, 5) 
-                        
-        #         elif course.get('shortname').strip('').endswith('53-26'):
-        #             for student_id in coursos_referencia_estudiantes[53]:
-        #                 enrol_user(course.get('id'), student_id, 5)
-                        
-        #         elif course.get('shortname').strip('').endswith('6-26'):
-        #             for student_id in coursos_referencia_estudiantes[61]:
-        #                 enrol_user(course.get('id'), student_id, 5)
-        #             for student_id in coursos_referencia_estudiantes[62]:
-        #                 enrol_user(course.get('id'), student_id, 5)
-        #             for student_id in coursos_referencia_estudiantes[63]:
-        #                 enrol_user(course.get('id'), student_id, 5)
-                        
-                        
-        #         elif course.get('shortname').strip('').endswith('61-26'):
-        #             for student_id in coursos_referencia_estudiantes[61]:
-        #                 enrol_user(course.get('id'), student_id, 5)
-                        
-        #         elif course.get('shortname').strip('').endswith('62-26'):
-        #             for student_id in coursos_referencia_estudiantes[62]:
-        #                 enrol_user(course.get('id'), student_id, 5)
-                        
-        #         elif course.get('shortname').strip('').endswith('63-26'):
-        #             for student_id in coursos_referencia_estudiantes[63]:
-        #                 enrol_user(course.get('id'), student_id, 5)
-        
-        # for student_id in coursos_referencia_estudiantes[21]:
-        #     enrol_user(1369, student_id, 5)
-        # for student_id in coursos_referencia_estudiantes[22]:
-        #     enrol_user(1369, student_id, 5)
-        # for student_id in coursos_referencia_estudiantes[23]:
-        #     enrol_user(1369, student_id, 5)
+        try:
+            logger.info("Conexión a Moodle exitosa. Iniciando la migración...")
+            courses_list_in_moodle = get_courses()
             
-        # for student_id in coursos_referencia_estudiantes[31]:
-        #     enrol_user(1370, student_id, 5)
-        # for student_id in coursos_referencia_estudiantes[32]:
-        #     enrol_user(1370, student_id, 5)
-        # for student_id in coursos_referencia_estudiantes[33]:
-        #     enrol_user(1370, student_id, 5)
-        
-        # for student_id in coursos_referencia_estudiantes[61]:
-        #     enrol_user(1425, student_id, 5)
-        #     enrol_user(1440, student_id, 5)
-        # for student_id in coursos_referencia_estudiantes[62]:
-        #     enrol_user(1425, student_id, 5)
-        #     enrol_user(1440, student_id, 5)
-        # for student_id in coursos_referencia_estudiantes[63]:
-        #     enrol_user(1425, student_id, 5)
-        #     enrol_user(1440, student_id, 5)
-        # for course in new_created_courses:
-        #     if get_enrolled_students(course.get('id')) == []:
-        #         print(f"Curso {course.get('shortname')} sin estudiantes inscritos. Inscribiendo estudiantes de referencia...")
-        # for course in new_created_courses:
-        #     if get_enrolled_teachers(course.get('id')) == []:
-        #        for old_course in old_courses:
-        #            if old_course.get('shortname')[:-2] == course.get('shortname')[:-2]:
-        #                teachers = get_enrolled_teachers(old_course.get('id'))
-        #                for teacher in teachers:
-        #                     enrol_user(course.get('id'), teacher.get('id'), 3)
-        for course in new_created_courses:
-            if get_enrolled_teachers(course.get('id')) == []:
-                logger.warning(f"Curso {course.get('shortname')} - ID: {course.get('id')} sin docentes inscritos. Inscribiendo docentes de referencia...")
-        # for course in old_courses:
-        #     logger.debug(f"Curso antiguo: ID: {course.get('id')} - ShortName: {course.get('shortname')}")
-    #     for old_id, new_id in docentes_faltantes.items():
-    #         teachers = get_enrolled_teachers(old_id)
-    #         for teacher in teachers:
-    #             enrol_user(new_id, teacher.get('id'), 3)
+            # Obtengo los cursos del año lectivo anterior
+            old_courses_school_year = sorted(filter_courses_by_age(courses_list_in_moodle, OLD_SCHOOL_YEAR), key=lambda x: x.get('shortname',''))
+
+            # Creo los cursos nuevos reemplazando el año lectivo anterior por el nuevo en el shortname y fullname
+            output = create_list_courses(courses_to_create(old_courses_school_year, NEW_SCHOOL_YEAR))
+            logger.info(f"Migración de cursos completada: {output}")
+            
+            # Modifico las categorias de los cursos nuevos para que correspondan a las categorias del año lectivo anterior
+            output = modify_courses_categories(old_courses_school_year, get_categories_by_parent())
+            logger.info(f"Modificación de categorías completada: {output}")
+            
+            # Obtengo los cursos nuevos para inscribir a los estudiantes y docentes
+            courses_to_enrol = sorted(filter_courses_by_age(courses_list_in_moodle, NEW_SCHOOL_YEAR), key=lambda x: x.get('shortname',''))
+            enroll_students_in_new_courses(courses_to_enrol)
+            enroll_teachers_in_new_courses(courses_to_enrol, old_courses_school_year)
+            
+        except Exception as e:
+            logger.error(f"Error durante la ejecución: {e}")
     else:
         logger.error("No se pudo conectar a Moodle. Verifique la configuración y vuelva a intentarlo.")
-    return
+    return  
 
 if __name__ == "__main__":
     main()
