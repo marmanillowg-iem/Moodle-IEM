@@ -11,7 +11,7 @@ logger = logging.getLogger(__name__)
     @Return: Respuesta de Moodle (dict o list) si es exitosa, None si hay error
 '''
 
-def moodle_call(function: str, params: dict | None = None) -> dict | list | None:
+def moodle_call(function: str, params: dict | None = None) -> dict | list:
     payload = {
         **(params or {}),
         'wstoken': MOODLE_TOKEN,
@@ -31,18 +31,18 @@ def moodle_call(function: str, params: dict | None = None) -> dict | list | None
         if isinstance(data, dict) and ('exception' in data or 'errorcode' in data):
             error_msg = data.get('message', data.get('debuginfo', str(data)))
             logger.error(f"Error de Moodle: {error_msg}")
-            return None
+            return []
 
         return data
     except requests.exceptions.Timeout:
         logger.error('Error en la llamada a Moodle: tiempo de espera agotado.')
-        return None
+        return []
     except requests.exceptions.RequestException as e:
         logger.error(f"Error en la llamada a Moodle: {e}")
-        return None
+        return []
     except ValueError:
         logger.error('Error en la llamada a Moodle: la respuesta no es JSON válido.')
-        return None
+        return []
     
 # Verifica la conexión a Moodle
 def moodle_test_connection() -> bool:

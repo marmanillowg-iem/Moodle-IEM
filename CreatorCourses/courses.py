@@ -6,7 +6,8 @@ logger = logging.getLogger(__name__)
 # Devuelve todos los cursos disponibles en Moodle
 def get_courses() -> list:
     try:
-        return moodle_call('core_course_get_courses')
+        result = moodle_call('core_course_get_courses')
+        return result if isinstance(result, list) else []
     except Exception as e:
         logger.error(f"Error al obtener cursos: {e}")
         return []
@@ -18,7 +19,6 @@ def get_courses() -> list:
     @Return: Lista de cursos que coinciden con el sufijo del año
 '''
 def filter_courses_by_age(courses: list, year_suffix: str) -> list:
-    """Filtra cursos cuyo shortname termina con el sufijo de año especificado."""
     return [
         course for course in courses
         if course.get('shortname', '').strip().endswith(year_suffix)
@@ -87,7 +87,6 @@ def courses_to_create(courses: list, year_suffix: str) -> list:
             'fullname': item.get('fullname', '')[:-2] + year_suffix,
             'categoryid': item.get('categoryid'),
             'summary': f"Aula Virtual de {item.get('fullname', '')[:-2]}{year_suffix}",
-            'displayname': item.get('fullname', '')[:-2] + year_suffix,
         }
         for item in courses
     ]
